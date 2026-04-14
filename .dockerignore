@@ -1,0 +1,32 @@
+# Environment and secrets
+.env
+.env.*
+credentials/
+
+# Backups
+backups/
+
+# Version control
+.git/
+.gitignore
+
+# Python caches
+__pycache__/
+*.pyc
+
+# Node dependencies
+admin/node_modules/
+
+# Tests
+tests/
+.pytest_cache/
+
+# Database dumps
+*.sql
+
+# IDE / editor
+.vscode/
+.idea/
+
+# Documentation
+*.md

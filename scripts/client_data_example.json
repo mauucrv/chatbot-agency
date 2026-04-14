@@ -1,0 +1,97 @@
+{
+  "info": {
+    "nombre_salon": "Barbería Los Reyes",
+    "direccion": "Av. Reforma #456, Col. Centro, CDMX",
+    "telefono": "+52 55 1234 5678",
+    "horario": "Lunes a Sábado: 10:00 AM - 8:00 PM\nDomingos: Cerrado",
+    "descripcion": "La mejor barbería de la zona. Servicio profesional con los mejores productos.",
+    "politicas": "• Se requiere reservación previa\n• Cancelaciones con mínimo 2 horas de anticipación\n• Se aceptan todas las formas de pago",
+    "redes_sociales": {
+      "instagram": "@barberia_losreyes",
+      "facebook": "Barbería Los Reyes"
+    }
+  },
+  "servicios": [
+    {
+      "servicio": "Corte de cabello",
+      "descripcion": "Corte clásico o moderno",
+      "precio": 120.00,
+      "duracion_minutos": 30,
+      "estilistas_disponibles": ["Juan Pérez", "Miguel Ríos"]
+    },
+    {
+      "servicio": "Recorte de barba",
+      "descripcion": "Perfilado y recorte profesional de barba",
+      "precio": 80.00,
+      "duracion_minutos": 20,
+      "estilistas_disponibles": ["Juan Pérez", "Miguel Ríos"]
+    },
+    {
+      "servicio": "Corte + Barba",
+      "descripcion": "Combo corte de cabello y arreglo de barba",
+      "precio": 180.00,
+      "duracion_minutos": 45,
+      "estilistas_disponibles": ["Juan Pérez", "Miguel Ríos"]
+    },
+    {
+      "servicio": "Cejas",
+      "descripcion": "Diseño y perfilado de cejas",
+      "precio": 50.00,
+      "duracion_minutos": 15,
+      "estilistas_disponibles": []
+    }
+  ],
+  "estilistas": [
+    {
+      "nombre": "Juan Pérez",
+      "telefono": "+52 55 9876 5432",
+      "email": "juan@barberia.com",
+      "google_calendar_id": "",
+      "especialidades": ["Corte", "Barba", "Diseño"],
+      "horarios": [
+        {"dia": "lunes", "hora_inicio": "10:00", "hora_fin": "20:00"},
+        {"dia": "martes", "hora_inicio": "10:00", "hora_fin": "20:00"},
+        {"dia": "miercoles", "hora_inicio": "10:00", "hora_fin": "20:00"},
+        {"dia": "jueves", "hora_inicio": "10:00", "hora_fin": "20:00"},
+        {"dia": "viernes", "hora_inicio": "10:00", "hora_fin": "20:00"},
+        {"dia": "sabado", "hora_inicio": "10:00", "hora_fin": "16:00"}
+      ]
+    },
+    {
+      "nombre": "Miguel Ríos",
+      "telefono": "+52 55 1111 2222",
+      "email": "miguel@barberia.com",
+      "google_calendar_id": "",
+      "especialidades": ["Corte", "Barba"],
+      "horarios": [
+        {"dia": "lunes", "hora_inicio": "12:00", "hora_fin": "20:00"},
+        {"dia": "martes", "hora_inicio": "12:00", "hora_fin": "20:00"},
+        {"dia": "miercoles", "hora_inicio": "12:00", "hora_fin": "20:00"},
+        {"dia": "jueves", "hora_inicio": "12:00", "hora_fin": "20:00"},
+        {"dia": "viernes", "hora_inicio": "12:00", "hora_fin": "20:00"},
+        {"dia": "sabado", "hora_inicio": "10:00", "hora_fin": "18:00"}
+      ]
+    }
+  ],
+  "keywords_humano": [
+    "hablar con humano",
+    "hablar con persona",
+    "agente humano",
+    "quiero hablar con alguien",
+    "operador",
+    "persona real",
+    "atencion al cliente",
+    "atención al cliente",
+    "queja",
+    "reclamación",
+    "reclamacion",
+    "problema urgente",
+    "emergencia",
+    "hablar con el dueño",
+    "hablar con el jefe",
+    "necesito hablar con alguien",
+    "comunicarme con alguien",
+    "agente real",
+    "hablar con el encargado"
+  ]
+}

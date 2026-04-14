@@ -1,0 +1,44 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+    paths-ignore:
+      - "*.md"
+      - "docs/**"
+      - ".gitignore"
+      - "LICENSE"
+  pull_request:
+    branches: [main]
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    env:
+      APP_ENV: development
+      SECRET_KEY: test-secret-key-for-ci-minimum-32-chars  # pragma: allowlist secret
+      OPENAI_API_KEY: test-key
+      CHATWOOT_BASE_URL: http://localhost:3000
+      CHATWOOT_API_TOKEN: test-token
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: "pip"
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+          pip install pytest pytest-asyncio pytest-cov httpx aiosqlite
+
+      - name: Run tests
+        run: pytest tests/ -v --tb=short --cov=app --cov-report=term-missing

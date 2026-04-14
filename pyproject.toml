@@ -1,0 +1,10 @@
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]
+filterwarnings = [
+    "ignore::DeprecationWarning",
+]
+markers = [
+    "integration: marks tests that require database",
+    "unit: marks pure unit tests",
+]
