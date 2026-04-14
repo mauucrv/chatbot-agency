@@ -1,97 +1,97 @@
 # chatbot-agency
 
-Production-grade WhatsApp chatbot built for a fictional AI consulting agency (**AgencyBot**). Demonstrates a full-stack agentic system: Chatwoot webhooks → LangChain agent (GPT-4o-mini) with 12 tools → appointment booking on Google Calendar, backed by a React admin panel. Spanish-language UX.
+Chatbot de WhatsApp para una agencia ficticia de consultoría en IA (**AgencyBot**). Demuestra un sistema agentico completo: webhooks de Chatwoot → agente LangChain (GPT-4o-mini) con 12 tools → agendamiento en Google Calendar, respaldado por un panel de administración en React. UX en español.
 
-> Portfolio project. The brand "AgencyBot" and its data are fictional; the codebase is a generalized version of a real deployment.
+> Proyecto de portafolio. La marca "AgencyBot" y los datos semilla son ficticios; el código es una versión generalizada de un despliegue real.
 
-## Features
+## Características
 
-### Messaging
-- Chatwoot webhook receiver (text, audio, images)
-- Audio transcription via OpenAI Whisper
-- Image understanding via GPT-4o Vision
-- Message grouping (buffers rapid-fire messages for 3s before replying)
-- Rate limiting per phone number — **fail-closed** (rejects if Redis is down)
+### Mensajería
+- Webhook de Chatwoot (texto, audio, imágenes)
+- Transcripción de audio con OpenAI Whisper
+- Interpretación de imágenes con GPT-4o Vision
+- Agrupación de mensajes (acumula mensajes rápidos por 3s antes de responder)
+- Rate limiting por teléfono — **fail-closed** (rechaza si Redis cae)
 
-### Agent & Booking
-- LangChain agent with 12 tools: availability checks, CRUD on bookings, services, consultants, info
-- Google Calendar FreeBusy API for availability
-- Distributed Redis lock on booking creation to prevent double-booking (TOCTOU-safe)
-- Configurable booking horizon (default 90 days)
+### Agente y Agendamiento
+- Agente LangChain con 12 tools: verificar disponibilidad, CRUD de citas, servicios, consultores, información
+- Google Calendar FreeBusy API para disponibilidad
+- Distributed Redis lock al crear citas para prevenir doble reserva (TOCTOU-safe)
+- Ventana de agendamiento configurable (default 90 días)
 
-### Bot Control
-- Auto-pauses when a human agent replies in Chatwoot
-- Auto-resumes when the conversation is marked resolved
-- Human-handoff keyword detection (opens conversation for an agent)
-- Auto-resume of stale paused conversations (>24h, configurable)
+### Control del Bot
+- Se pausa automáticamente cuando un agente humano responde en Chatwoot
+- Se reactiva cuando la conversación se marca como resuelta
+- Detección de keywords de handoff humano (abre la conversación para un agente)
+- Auto-resume de conversaciones pausadas >24h (configurable)
 
-### Scheduled Jobs
-- Daily appointment reminders
-- Weekly business stats report
-- Daily PostgreSQL backup to Google Drive (Fernet-encrypted)
-- Periodic Google Calendar sync
+### Jobs Programados
+- Recordatorios diarios de citas
+- Reporte semanal de estadísticas
+- Backup diario de PostgreSQL a Google Drive (cifrado con Fernet)
+- Sincronización periódica de Google Calendar
 
-### Security
-- Webhook signature verification (HMAC or URL token) — mandatory in production
-- Hard-fail startup validation of critical env vars in production
-- JWT auth (PyJWT) with token blacklist and refresh rotation
-- Password complexity (min 12 chars + classes) + timing-safe login
+### Seguridad
+- Verificación obligatoria de firma de webhooks en producción (HMAC o token URL)
+- Validación hard-fail de variables críticas al arrancar en producción
+- Autenticación JWT (PyJWT) con blacklist de tokens y rotación de refresh
+- Complejidad de contraseña (mín 12 chars + clases) + login timing-safe
 - Security headers (CSP, HSTS, X-Frame-Options, etc.)
-- Sensitive query params redacted from logs
-- Non-root Docker user + resource limits
-- Encrypted backups before external upload
+- Parámetros sensibles redactados de los logs
+- Usuario no-root en Docker + resource limits
+- Backups cifrados antes de subirlos a servicios externos
 
-### Admin Panel
+### Panel de Administración
 - React 18 + Vite + TypeScript + Tailwind + shadcn/ui
-- ~60 REST endpoints (FastAPI, JWT)
-- Roles: `admin` (full CRUD) / `viewer` (read-only)
-- Screens: Dashboard, Appointments, Services, Consultants, Clients, Inventory, Sales, Info, Stats, Reports
+- ~60 endpoints REST (FastAPI, JWT)
+- Roles: `admin` (CRUD completo) / `viewer` (solo lectura)
+- Pantallas: Dashboard, Citas, Servicios, Consultores, Clientes, Inventario, Ventas, Información, Estadísticas, Informes
 
-### Observability
-- Structured JSON logs with `structlog`
-- Optional Telegram error alerts with Redis-based dedup
+### Observabilidad
+- Logs JSON estructurados con `structlog`
+- Alertas opcionales de errores por Telegram con deduplicación en Redis
 
 ## Stack
 
-| Layer | Tech |
+| Capa | Tecnología |
 |---|---|
 | API | FastAPI (async) |
-| Agent | LangChain + OpenAI GPT-4o-mini |
+| Agente | LangChain + OpenAI GPT-4o-mini |
 | DB | PostgreSQL 15 + SQLAlchemy 2.0 + asyncpg |
-| Migrations | Alembic |
+| Migraciones | Alembic |
 | Cache / Locks / Rate limit | Redis 7 |
 | Jobs | APScheduler |
-| Validation | Pydantic v2 |
+| Validación | Pydantic v2 |
 | Google APIs | google-api-python-client |
 | Frontend | React 18 + Vite + Tailwind + shadcn/ui |
-| Containers | Docker + docker-compose |
+| Contenedores | Docker + docker-compose |
 | Tests | pytest + pytest-asyncio |
 
-## Getting started
+## Cómo empezar
 
-### Prerequisites
+### Prerrequisitos
 - Docker + Docker Compose
-- OpenAI API key
-- A Chatwoot instance (self-hosted or cloud)
-- A Google Cloud project with the Calendar API enabled and a service account with calendar access
+- API key de OpenAI
+- Instancia de Chatwoot (self-hosted o cloud)
+- Proyecto de Google Cloud con Calendar API habilitada y service account con acceso al calendario
 
-### Run
+### Ejecutar
 ```bash
 git clone <repo-url>
 cd chatbot-agency
 cp .env.example .env
 chmod 600 .env
-# fill in secrets in .env
+# Llenar secrets en .env
 docker-compose up -d
 ```
 
-Alembic migrations run automatically on startup (in dev); in production, run them manually with `alembic upgrade head`.
+Las migraciones de Alembic corren automáticamente al arrancar (en dev); en producción, correr manualmente con `alembic upgrade head`.
 
-### Configure the Chatwoot webhook
+### Configurar el webhook de Chatwoot
 ```
-URL:    https://your-host/api/webhooks/chatwoot
+URL:    https://tu-dominio/api/webhooks/chatwoot
 Events: message_created, conversation_status_changed
-Auth:   ?token=<CHATWOOT_WEBHOOK_TOKEN>  (or X-Chatwoot-Signature HMAC)
+Auth:   ?token=<CHATWOOT_WEBHOOK_TOKEN>  (o firma HMAC X-Chatwoot-Signature)
 ```
 
 ## Tests
@@ -101,13 +101,13 @@ pip install -r requirements.txt
 pytest tests/ -v --cov=app --cov-report=term-missing
 ```
 
-## Architecture notes
+## Notas de arquitectura
 
-- Spanish-language UX; legacy model names (`ServicioBelleza`, `Estilista`) kept intact for migration compatibility — the code originally served a beauty salon use case before being generalized.
-- Singletons for the agent, message processor, and service clients.
-- All I/O is async.
-- Agent temperature deliberately low (0.3) for transactional consistency when booking.
+- UX en español; los nombres de modelos legacy (`ServicioBelleza`, `Estilista`) se mantienen por compatibilidad con migraciones — el código originalmente servía a un caso de uso de salón de belleza antes de ser generalizado.
+- Singletons para el agente, message processor y clientes de servicios.
+- Todo el I/O es async.
+- Temperatura del agente deliberadamente baja (0.3) para consistencia transaccional al agendar.
 
-## License
+## Licencia
 
 MIT

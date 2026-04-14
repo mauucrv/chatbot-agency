@@ -95,14 +95,14 @@ async def seed_initial_data() -> None:
                 descripcion="Videollamada para conocer tus necesidades y explorar cómo AgencyBot puede ayudarte",
                 precio=0,
                 duracion_minutos=30,
-                estilistas_disponibles=["Alex Demo"],
+                estilistas_disponibles=["Mauricio Demo"],
             ),
             ServicioBelleza(
                 servicio="Prueba gratuita del chatbot",
                 descripcion="Configuración inicial del chatbot para tu negocio + 1 semana de prueba sin costo ni compromiso",
                 precio=0,
                 duracion_minutos=45,
-                estilistas_disponibles=["Alex Demo"],
+                estilistas_disponibles=["Mauricio Demo"],
             ),
         ]
 
@@ -112,7 +112,7 @@ async def seed_initial_data() -> None:
         # Create consultants
         stylists_data = [
             {
-                "nombre": "Alex Demo",
+                "nombre": "Mauricio Demo",
                 "telefono": "",
                 "email": "contacto@example.com",
                 "especialidades": ["Chatbots", "Automatizaciones", "Consultoría IA"],
