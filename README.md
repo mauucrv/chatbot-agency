@@ -110,4 +110,4 @@ pytest tests/ -v --cov=app --cov-report=term-missing
 
 ## Licencia
 
-MIT
+[PolyForm Noncommercial 1.0.0](./LICENSE) — libre para estudiar, evaluar, experimentar y usar con fines no comerciales (investigación, aprendizaje, proyectos personales, organizaciones sin fines de lucro). El uso comercial requiere autorización del autor.
